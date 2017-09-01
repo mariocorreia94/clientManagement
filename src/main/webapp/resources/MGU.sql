@@ -1,0 +1,11 @@
+CREATE DATABASE `mgu` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+
+CREATE TABLE `mgu`.`user` (
+  `iduser` BIGINT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  `nif` VARCHAR(9) NOT NULL,
+  `phone` VARCHAR(20) NULL,
+  `adress` VARCHAR(200) NULL,
+  PRIMARY KEY (`iduser`),
+  UNIQUE INDEX `iduser_UNIQUE` (`iduser` ASC));
