@@ -4,41 +4,49 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- look for spring annotations inside the controller package -->
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="multicert.exercicio"/>
 
+    <!-- configure the view resolver -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
 
-        <!-- look for spring annotations inside the controller package -->
-        <mvc:annotation-driven/>
-        <context:component-scan base-package="multicert.exercicio"/>
+<!--
+    <bean class="multicert.exercicio.service.MockClientService">
+        <property name="clientList">
+            <list>
+                <bean class="multicert.exercicio.model.Client">
+                    <property name="name" value="mario"></property>
+                    <property name="nif" value="54365463"></property>
+                    <property name="adress" value="rua ministro duarte pacheco"></property>
+                    <property name="phone" value="969156572"></property>
+                </bean>
+                <bean class="multicert.exercicio.model.Client">
+                    <property name="name" value="carla"></property>
+                    <property name="nif" value="22849589"></property>
+                    <property name="adress" value="rua ministro duarte pacheco"></property>
+                    <property name="phone" value="963544399"></property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+-->
 
-        <!-- configure the view resolver -->
-        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-            <property name="prefix" value="/WEB-INF/jsp/"/>
-            <property name="suffix" value=".jsp"/>
-        </bean>
-
-        <bean class="multicert.exercicio.service.MockClientService">
-            <property name="clientList">
-                <list>
-                    <bean class="multicert.exercicio.model.Client">
-                        <property name="name" value="mario"></property>
-                        <property name="nif" value="54365463"></property>
-                        <property name="adress" value="rua ministro duarte pacheco"></property>
-                        <property name="phone" value="969156572"></property>
-                    </bean>
-                    <bean class="multicert.exercicio.model.Client">
-                        <property name="name" value="carla"></property>
-                        <property name="nif" value="22849589"></property>
-                        <property name="adress" value="rua ministro duarte pacheco"></property>
-                        <property name="phone" value="963544399"></property>
-                    </bean>
-                </list>
-            </property>
-
-        </bean>
-
-    <import resource="presentation.xml"/>
     <import resource="persistence.xml"/>
-    <import resource="service.xml"/>
-    <import resource="hibernate.xml"/>
 
-    </beans>
+    <bean id="hibernateClient" class="multicert.exercicio.model.HibernateClient">
+        <property name="sessionManager" ref="sessionManager"/>
+    </bean>
+
+    <bean id="clientRestController" class="multicert.exercicio.controller.ClientRestController">
+        <property name="clientServiceImp" ref="clientServiceImp" />
+    </bean>
+
+    <bean id="clientServiceImp" class="multicert.exercicio.service.ClientServiceImp">
+        <property name="hibernateClient" ref="hibernateClient"/>
+    </bean>
+
+</beans>

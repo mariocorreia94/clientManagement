@@ -36,12 +36,7 @@ public class HibernateClient {
 
         Session session = sessionManager.beginTransaction();
 
-        StringBuilder stringBuilder = new StringBuilder("FROM Client ");
-
-        if(clientName != null && !clientName.isEmpty())
-            stringBuilder.append("WHERE name LIKE :clientName");
-
-        Query query = session.createQuery(stringBuilder.toString());
+        Query query = session.createQuery("FROM Client WHERE name LIKE :clientName");
 
         if(clientName != null && !clientName.isEmpty())
             query.setString("clientName", "%" + clientName + "%");
@@ -49,7 +44,16 @@ public class HibernateClient {
         return (List<Client>) query.list();
     }
 
-    @Transactional
+    public List<Client> findAll() {
+
+        Session session = sessionManager.beginTransaction();
+
+        Query query = session.createQuery("FROM Client");
+
+        return (List<Client>) query.list();
+
+    }
+
     public Client findByNIF(String nif) {
 
         Session session = sessionManager.beginTransaction();
@@ -58,7 +62,22 @@ public class HibernateClient {
 
         query.setString("nif", nif);
 
+
         return (Client) query.uniqueResult();
+    }
+
+    public void editClient(String nif, Client client) {
+
+        Session session = sessionManager.beginTransaction();
+
+        Client clientToUpdate = findByNIF(nif);
+
+        clientToUpdate.setName(client.getName());
+        clientToUpdate.setAdress(client.getAdress());
+        clientToUpdate.setPhone(client.getPhone());
+
+        session.saveOrUpdate(clientToUpdate);
+
     }
 
     public void setSessionManager(HibernateSessionManager sessionManager) {

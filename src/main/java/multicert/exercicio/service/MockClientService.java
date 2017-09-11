@@ -16,7 +16,12 @@ public class MockClientService implements ClientService {
 
     @Override
     public void removeClient(String nif) {
-        clientList.remove(null);
+        clientList.remove(findByNIF(nif));
+    }
+
+    @Override
+    public List<Client> findAll() {
+        return null;
     }
 
     @Override
@@ -47,6 +52,11 @@ public class MockClientService implements ClientService {
             }
         }
         return client;
+    }
+
+    @Override
+    public void editClient(String nif, Client client) {
+
     }
 
     public List<Client> getClientList() {

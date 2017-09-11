@@ -1,18 +1,32 @@
 package multicert.exercicio.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 public class Client {
 
-    private int iduser;
+    private int id;
+
+    @NotNull(message = "Nome é obrigatório")
+    @NotBlank(message = "Nome é obrigatório")
+    @Pattern(regexp = "[a-z-A-Z]*", message = "O nome contem caracteres inválidos")
     private String name;
+
+    @Pattern(regexp="(^$|[0-9]{9})", message = "NIF tem que ter 9 numeros")
     private String nif;
+
     private String adress;
+
+    @Pattern(regexp="(^$|[0-9]{9})", message = "Numero de telefone tem que ter 9 numeros")
     private String phone;
 
     public Client() {
     }
 
-    public Client(int iduser, String name, String nif, String adress, String phone) {
-        this.iduser = iduser;
+    public Client(int id, String name, String nif, String adress, String phone) {
+        this.id = id;
         this.name = name;
         this.nif = nif;
         this.adress = adress;
@@ -27,12 +41,12 @@ public class Client {
     }
 
 
-    public int getIduser() {
-        return iduser;
+    public int getId() {
+        return id;
     }
 
-    public void setIduser(int iduser) {
-        this.iduser = iduser;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

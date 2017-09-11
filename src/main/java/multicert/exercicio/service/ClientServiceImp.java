@@ -14,6 +14,20 @@ public class ClientServiceImp implements ClientService {
 
     @Transactional
     @Override
+    public List<Client> findAll() {
+
+        return hibernateClient.findAll();
+    }
+
+    @Transactional
+    @Override
+    public List<Client> findByName(String clientName) {
+
+        return hibernateClient.findByName(clientName);
+    }
+
+    @Transactional
+    @Override
     public void addClient(Client client) {
 
         hibernateClient.addClient(client);
@@ -30,15 +44,16 @@ public class ClientServiceImp implements ClientService {
 
     @Transactional
     @Override
-    public List<Client> findByName(String clientName) {
-
-        return hibernateClient.findByName(clientName);
-    }
-
-    @Override
     public Client findByNIF(String nif) {
 
         return hibernateClient.findByNIF(nif);
+    }
+
+    @Transactional
+    @Override
+    public void editClient(String nif, Client client) {
+
+        hibernateClient.editClient(nif, client);
     }
 
     public void setHibernateClient(HibernateClient hibernateClient) {

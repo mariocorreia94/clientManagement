@@ -1,6 +1,7 @@
 package multicert.exercicio.controller;
 
 import multicert.exercicio.model.Client;
+import multicert.exercicio.service.ClientService;
 import multicert.exercicio.service.MockClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.servlet.http.HttpServlet;
 import javax.validation.Valid;
 
@@ -17,14 +19,14 @@ import javax.validation.Valid;
 public class ClientController extends HttpServlet {
 
     @Autowired
-    private MockClientService userService;
+    private ClientService clientServiceImp;
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
-    public ModelAndView showUserList(Model model) {
+    public ModelAndView showClientList(Model model) {
 
         ModelAndView modelAndView = new ModelAndView("client");
 
-        modelAndView.addObject("clients", userService.getClientList());
+        modelAndView.addObject("clients", clientServiceImp.findAll());
 
         Client client = (Client) model.asMap().get("createClient");
 
@@ -42,7 +44,7 @@ public class ClientController extends HttpServlet {
             return "redirect:/";
         }
 
-        userService.addClient(client);
+        clientServiceImp.addClient(client);
 
         redirectAttributes.addFlashAttribute("Added client " + client.getName() + " successfully!");
 
@@ -50,15 +52,37 @@ public class ClientController extends HttpServlet {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "remove/{nif}")
-    public String removeClient(Model model, @PathVariable("nif") String nif) {
+    public String removeClient(@PathVariable("nif") String nif) {
 
-        //userService.removeClient(userService.findByNIF(nif));
+        clientServiceImp.removeClient(nif);
 
         return "redirect:/";
 
     }
 
-    public void setUserService(MockClientService userService) {
-        this.userService = userService;
+    // TODO: edit method
+    @RequestMapping(method = RequestMethod.GET, value = "getClient/{nif}")
+    public String getClient(@PathVariable("nif") String nif, RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute("createClient", clientServiceImp.findByNIF(nif));
+
+        return "redirect:/";
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "updateClient/{nif}")
+    public String updateClient(@PathVariable("nif") String nif, @Valid @ModelAttribute("createClient") Client client, BindingResult bindingResult) {
+
+        System.out.println(bindingResult.toString());
+        System.out.println(client.toString());
+
+        if (bindingResult.hasErrors()) {
+            return "redirect:/";
+        }
+
+        clientServiceImp.editClient(nif, client);
+
+        return "redirect:/";
+
+    }
+
 }

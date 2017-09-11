@@ -7,7 +7,7 @@
 
     <class name="multicert.exercicio.model.Client" table="user">
 
-        <id name="iduser" column="iduser" type="int">
+        <id name="id" column="id" type="int">
             <generator class="identity" />
         </id>
 

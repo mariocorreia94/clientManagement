@@ -13,18 +13,25 @@ import java.util.List;
 @RequestMapping(value = "/service/users")
 public class ClientRestController {
 
-
     ClientService clientServiceImp;
 
-    //All Clients and findByName Clients
+    //All Clients
     @RequestMapping(method = RequestMethod.GET, value = "/")
-    public ResponseEntity<List<Client>> findByName(@RequestParam(name = "name", required = false) String name) {
+    public ResponseEntity<List<Client>> findAll() {
+
+        return ResponseEntity.ok().body(clientServiceImp.findAll());
+
+    }
+
+    //findByName Clients
+    @RequestMapping(method = RequestMethod.GET, value = "/name/")
+    public ResponseEntity<List<Client>> findByName(@RequestParam(name = "name") String name) {
 
         return ResponseEntity.ok().body(clientServiceImp.findByName(name));
     }
 
     //Add Client
-    @RequestMapping(method = RequestMethod.POST, value = "/", consumes = "application/json")
+    @RequestMapping(method = RequestMethod.POST, value = "/add", consumes = "application/json")
     public ResponseEntity createClient(@RequestBody Client client) {
 
         if (clientServiceImp.findByNIF(client.getNif()) == null) {
@@ -37,8 +44,8 @@ public class ClientRestController {
     }
 
     //Search by NIF
-    @RequestMapping(method = RequestMethod.GET, value = "/{nif}")
-    public ResponseEntity<Client> getClient(@PathVariable String nif) {
+    @RequestMapping(method = RequestMethod.GET, value = "/search/")
+    public ResponseEntity<Client> getClient(@RequestParam(name = "nif") String nif) {
 
         if (clientServiceImp.findByNIF(nif) != null) {
             return ResponseEntity.ok(clientServiceImp.findByNIF(nif));
@@ -47,8 +54,9 @@ public class ClientRestController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{nif}")
-    public ResponseEntity deleteClient(@PathVariable String nif) {
+    // Delete a client
+    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/")
+    public ResponseEntity deleteClient(@RequestParam(name = "nif") String nif) {
 
         if (clientServiceImp.findByNIF(nif) == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -57,6 +65,18 @@ public class ClientRestController {
         clientServiceImp.removeClient(nif);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/edit/", consumes = "application/json")
+    public ResponseEntity editClient(@RequestParam(name = "nif") String nif, @RequestBody Client client){
+
+        if (clientServiceImp.findByNIF(nif) == null || client == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        clientServiceImp.editClient(nif, client);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Resource

@@ -10,8 +10,11 @@ public interface ClientService {
 
     void removeClient(String nif);
 
+    List<Client> findAll();
+
     List<Client> findByName(String clientName);
 
     Client findByNIF (String nif);
 
+    void editClient(String nif, Client client);
 }
