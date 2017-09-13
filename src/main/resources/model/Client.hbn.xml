@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
 
-    <class name="multicert.exercicio.model.Client" table="user">
+    <class name="management.client.model.Client" table="user">
 
         <id name="id" column="id" type="int">
             <generator class="identity" />

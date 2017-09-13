@@ -39,7 +39,7 @@
         </property>
     </bean>
 
-    <bean id="sessionManager" class="multicert.exercicio.persistence.HibernateSessionManager">
+    <bean id="sessionManager" class="management.client.persistence.HibernateSessionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 

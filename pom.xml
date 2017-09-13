@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 <modelVersion>4.0.0</modelVersion>
-    <groupId>multicert.exercicio</groupId>
-    <artifactId>ExercicioMulticert</artifactId>
+    <groupId>management.client</groupId>
+    <artifactId>ClientManagement</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>ExercicioMulticert Maven Webapp</name>
+    <name>Client Management Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
     <dependencies>
@@ -132,7 +132,7 @@
                 <configuration>
                     <url>http://localhost:8080/manager/text</url>
                     <server>tomcat</server>
-                    <path>/exericioMulticert</path>
+                    <path>/clientManagement</path>
                 </configuration>
             </plugin>
 
@@ -149,7 +149,7 @@
 
         </plugins>
 
-        <finalName>exercicioMulticert</finalName>
+        <finalName>clientManagement</finalName>
 
     </build>
 </project>

@@ -1,9 +1,0 @@
-multicert\exercicio\service\ClientServiceImp.class
-multicert\exercicio\persistence\TransactionException.class
-multicert\exercicio\model\Client.class
-multicert\exercicio\service\MockClientService.class
-multicert\exercicio\service\ClientService.class
-multicert\exercicio\model\HibernateClient.class
-multicert\exercicio\persistence\HibernateSessionManager.class
-multicert\exercicio\controller\ClientRestController.class
-multicert\exercicio\controller\ClientController.class

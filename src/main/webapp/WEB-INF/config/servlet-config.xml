@@ -6,7 +6,7 @@
 
     <!-- look for spring annotations inside the controller package -->
     <mvc:annotation-driven/>
-    <context:component-scan base-package="multicert.exercicio"/>
+    <context:component-scan base-package="management.client"/>
 
     <!-- configure the view resolver -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -15,16 +15,16 @@
     </bean>
 
 <!--
-    <bean class="multicert.exercicio.service.MockClientService">
+    <bean class="MockClientService">
         <property name="clientList">
             <list>
-                <bean class="multicert.exercicio.model.Client">
+                <bean class="Client">
                     <property name="name" value="mario"></property>
                     <property name="nif" value="54365463"></property>
                     <property name="adress" value="rua ministro duarte pacheco"></property>
                     <property name="phone" value="969156572"></property>
                 </bean>
-                <bean class="multicert.exercicio.model.Client">
+                <bean class="Client">
                     <property name="name" value="carla"></property>
                     <property name="nif" value="22849589"></property>
                     <property name="adress" value="rua ministro duarte pacheco"></property>
@@ -37,15 +37,15 @@
 
     <import resource="persistence.xml"/>
 
-    <bean id="hibernateClient" class="multicert.exercicio.model.HibernateClient">
+    <bean id="hibernateClient" class="management.client.model.HibernateClient">
         <property name="sessionManager" ref="sessionManager"/>
     </bean>
 
-    <bean id="clientRestController" class="multicert.exercicio.controller.ClientRestController">
+    <bean id="clientRestController" class="management.client.controller.ClientRestController">
         <property name="clientServiceImp" ref="clientServiceImp" />
     </bean>
 
-    <bean id="clientServiceImp" class="multicert.exercicio.service.ClientServiceImp">
+    <bean id="clientServiceImp" class="management.client.service.ClientServiceImp">
         <property name="hibernateClient" ref="hibernateClient"/>
     </bean>
 
