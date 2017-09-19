@@ -5,6 +5,7 @@
 <head>
     <title>Gestão de Clientes</title>
     <link rel="stylesheet" type="text/css" href="resources/main.css"/>
+    <link rel="shortcut icon" type="image/png" href="resources/images/favicon.png"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
