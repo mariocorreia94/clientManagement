@@ -2,8 +2,10 @@ package management.client.controller;
 
 import management.client.model.Client;
 import management.client.service.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -13,7 +15,7 @@ import java.util.List;
 @RequestMapping(value = "/service/users")
 public class ClientRestController {
 
-    ClientService clientServiceImp;
+    private ClientService clientServiceImp;
 
     //Serach Clients
     @RequestMapping(method = RequestMethod.GET, value = "/")
@@ -50,8 +52,12 @@ public class ClientRestController {
 
     //Add Client
     @RequestMapping(method = RequestMethod.POST, value = "/", consumes = "application/json")
-    public ResponseEntity createClient(@RequestBody Client client) {
+    public ResponseEntity createClient(@RequestBody Client client, BindingResult bindingResult) {
 
+        if (bindingResult.hasErrors()) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
         if (clientServiceImp.findByNIF(client.getNif()) == null) {
 
             clientServiceImp.addClient(client);
@@ -63,9 +69,15 @@ public class ClientRestController {
 
     //Edit Client
     @RequestMapping(method = RequestMethod.PUT, value = "/{nif}", consumes = "application/json")
-    public ResponseEntity editClient(@PathVariable String nif, @RequestBody Client client) {
+    public ResponseEntity editClient(@PathVariable String nif, @RequestBody Client client, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()){
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
 
         if (clientServiceImp.findByNIF(nif) == null || client == null) {
+
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 

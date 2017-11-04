@@ -8,9 +8,9 @@
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11192587"/>
-        <property name="user" value="sql11192587"/>
-        <property name="password" value="yLKkABm5eK"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/mgu"/>
+        <property name="user" value="mguuser"/>
+        <property name="password" value="mgupass"/>
 
         <!-- c3p0 database connection pool management properties -->
         <property name="minPoolSize" value="1"/>
